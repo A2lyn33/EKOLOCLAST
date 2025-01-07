@@ -144,5 +144,4 @@ Une entreprise est en perpétuel mouvement. Pour suivre les changements :
 ---
 
 ## ✅ **Conclusion**
-
-Ce plan assure une gestion proactive et sécurisée de l’infrastructure réseau, incluant la supervision, la journalisation et l’adaptabilité aux évolutions RH. Chaque composant est optimisé pour répondre aux exigences actuelles et futures d’Ekoloclast.
+Chaque composant est optimisé pour répondre aux exigences actuelles et futures d’Ekoloclast.
