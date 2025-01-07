@@ -29,13 +29,19 @@ Projet 3
 
 ## 📅 **2. Proposition de répartition des objectifs par sprint**
 
-| **Sprint**  | **Objectifs principaux**                                                                                 | **Objectifs secondaires**                                              | **Optionnels**                              |
-|-------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------|
-| **Semaine 1** | Étude des besoins. Schéma réseau prévisionnel. Plan d'adressage IP. Choix du matériel réseau.             | Convention de nommage. Choix des VLANs.                               | -                                            |
-| **Semaine 2** | Installation des routeurs/switches. Création des VLANs. Configuration du routage.                        | Installation des points d'accès Wi-Fi.                                | -                                            |
-| **Semaine 3** | Mise en place des serveurs (AD, DNS, DHCP). Configuration des droits d’accès.                            | Configuration de la messagerie interne (Exchange).                    | Intégration SSO avec messagerie cloud.      |
-| **Semaine 4** | Configuration du réseau Wi-Fi sécurisé (SSID par VLAN). Déploiement des solutions de sécurité (Firewall). | Mise en place des sauvegardes (NAS ou Cloud).                         | Surveillance du réseau via Zabbix/PRTG.     |
-| **Semaine 5** | Formation des utilisateurs. Documentation complète.                                                     | Tests de redondance réseau et de sauvegarde.                          | Préparation à l’intégration d'une autre entité. |
+| **Sprint**    | **Objectifs principaux**                                                                 | **Objectifs secondaires**                                          | **Optionnels**                           |
+|---------------|------------------------------------------------------------------------------------------|----------------------------------------------------------------------|-------------------------------------------|
+| **Semaine 1** | Étude des besoins. Schéma réseau prévisionnel. Plan d'adressage IP. Choix du matériel.    | Convention de nommage. Choix des VLANs.                             | -                                         |
+| **Semaine 2** | Installation des routeurs/switches. Création des VLANs. Configuration du routage.         | Installation des points d'accès Wi-Fi.                              | -                                         |
+| **Semaine 3** | Mise en place des serveurs (AD, DNS, DHCP). Configuration des droits d’accès.             | Configuration de la messagerie interne (Exchange).                  | Intégration SSO avec messagerie cloud.   |
+| **Semaine 4** | Configuration du réseau Wi-Fi sécurisé. Déploiement des solutions de sécurité (Firewall). | Mise en place des sauvegardes (NAS ou Cloud).                       | Surveillance réseau via Zabbix/PRTG.     |
+| **Semaine 5** | Formation des utilisateurs. Documentation complète.                                      | Tests de redondance réseau et de sauvegarde.                        | Préparation à l’intégration future.      |
+| **Semaine 6** | Mise en place des GPO (stratégies de sécurité et standards).                             | Test des scripts et documentation.                                  | Ajout d'options de redondance serveurs.  |
+| **Semaine 7** | Configuration de la supervision réseau avec Zabbix/Nagios.                              | Mise en place des tableaux de bord (dashboards).                    | Intégration avec GLPI et logs centralisés.|
+| **Semaine 8** | Test des sauvegardes et restauration. Optimisation des configurations existantes.        | Formation des administrateurs sur les solutions mises en place.     | Implémentation des alertes en temps réel.|
+| **Semaine 9** | Surveillance avancée du pare-feu et gestion des logs centralisés.                        | Documentation détaillée des configurations.                         | Amélioration de la redondance réseau.    |
+| **Semaine 10**| Gestion des utilisateurs et des objets AD. Planification des mises à jour de sécurité.   | Finalisation des configurations avancées pour les scripts.          | Ajout de solutions pour la gestion des invités.|
+| **Semaine 11**| Validation de l'ensemble de l'infrastructure. Tests finaux de robustesse et redondance.  | Livraison et présentation de la documentation finale.               | Transition vers les équipes opérationnelles.|
 
 ---
 
@@ -67,18 +73,82 @@ Projet 3
 
 ## 📝 **4. Convention de nommage**
 
-- **Postes utilisateurs :** `PC-<Département>-<NomUtilisateur>`
-  - Exemple : `PC-DSI-JDupont`.
-- **Serveurs :** `SRV-<Fonction>`
-  - Exemple : `SRV-AD`, `SRV-DHCP`.
-- **Switches :** `SW-<Étage>`
-  - Exemple : `SW-1`, `SW-2`.
-- **Routeurs :** `RTR-<NomZone>`
-  - Exemple : `RTR-MAIN`, `RTR-BACKUP`.
+### 📌 **Domaines et OU**
+- **Nom de domaine FQDN** : `ekoloclast.[TLD]`
+- **OU (Unités Organisationnelles)** :
+  - Localisation : NomDépartement (optionnel).
+  - Exemple : `paris20-communication`.
+
+### 📌 **Groupes de sécurité**
+- Format : `group-[L/G]-[pc/us/fc]-[secteur]`
+- Exemple : `group-L-pc-dsi`.
+
+### 📌 **Ordinateurs et équipements**
+- **Format des noms :**
+  - Nom anglais en capital avec type d'équipement et OS/marque.
+  - Numéro, département/fonction, emplacement.
+  - Exemple : `server-001-dsi-paris20`.
+- **Équipements :**
+  - **Smartphone** : `smartphone-001-comm-nomade`.
+  - **Serveur** : `server-01-AD-DHCP-DNS-paris20`.
+  - **Switch** : `switch-paris20`.
+  - **Routeur** : `router-paris20`.
+  - **Pare-feu** : `firewall-paris20`.
+
+### 📌 **Utilisateurs**
+- Format : `NomPrenom-Département`.
+- Exemple : `taiev-ol-comm`.
+- Gestion des invités/utilisateurs temporaires à prévoir.
+- Homonymes gérés par ajout d’identifiants supplémentaires.
+
+### 📌 **GPO (Group Policy Objects)**
+- Format : `cible-stratégie-numéro`.
+- Exemple : `mktg-noterminal-001`.
+
+### 📌 **Nom des départements**
+| Département                  | Abréviation |
+|------------------------------|-------------|
+| Communication                | Comm        |
+| Direction Financière         | DFin        |
+| Direction Générale           | DG          |
+| Marketing                    | Mktg        |
+| Direction des systèmes d'information | DSI  |
+| Recherche et Innovation      | RI          |
+| Ressources Humaines          | RH          |
+| Gestion des Biens            | GB          |
+| Service Juridique            | SJuri       |
+| Ventes et Développement      | VDC         |
+
+### 📌 **Convention pour adresses IP**
+- Format : `IP-Département-NomPrenom`.
+- Exemple : `192.168.2.54-comm-taievolga`.
 
 ---
 
-## 🎯 **5. Objectifs détaillés**
+## 🌐 **5. Adressage Société Ekoloclast**
+
+- **Réseau** : `172.24.0.0/16`
+- **Gateway** : `172.24.255.254`
+- **IP DNS** : `172.24.255.254`
+
+### 🏢 **Départements et étendue réseau**
+
+| **Département**            | **Nbr de Services** | **Nbr de Personnes** | **Adresses Disponibles**           | **Etendue du Réseau**         |
+|-----------------------------|---------------------|-----------------------|-------------------------------------|--------------------------------|
+| Direction Générale          | -                   | 8                     | 30                                  | 172.24.1.1 → 172.24.1.30       |
+| Direction Financière        | 3                   | 14                    | 45                                  | 172.24.2.1 → 172.24.2.45       |
+| Direction Marketing         | 4                   | 22                    | 70                                  | 172.24.3.1 → 172.24.3.70       |
+| DSI                         | 3                   | 12                    | 45                                  | 172.24.4.1 → 172.24.4.45       |
+| Recherche et Innovation     | 2                   | 17                    | 60                                  | 172.24.5.1 → 172.24.5.60       |
+| Ressources Humaines         | 4                   | 24                    | 75                                  | 172.24.6.1 → 172.24.6.75       |
+| Communication               | 3                   | 20                    | 70                                  | 172.24.7.1 → 172.24.7.70       |
+| Gestion des Biens           | 2                   | 12                    | 40                                  | 172.24.8.1 → 172.24.8.40       |
+| Service Juridique           | 2                   | 8                     | 30                                  | 172.24.9.1 → 172.24.9.30       |
+| Ventes et Développement     | 7                   | 46                    | 150                                 | 172.24.10.1 → 172.24.10.150    |
+
+---
+
+## 🎯 **6. Objectifs détaillés**
 
 ### 🔒 **1. JOURNALISATION - Gestion des logs centralisée**
 1. Utilisation de l'un des systèmes suivants :
@@ -126,7 +196,7 @@ Projet 3
 
 ---
 
-## 📦 **6. Contexte et réflexion**
+## 📦 **7. Contexte et réflexion**
 
 ### 📈 **Évolution de l'entreprise**
 Une entreprise est en perpétuel mouvement. Pour suivre les changements :
@@ -144,4 +214,3 @@ Une entreprise est en perpétuel mouvement. Pour suivre les changements :
 ---
 
 ## ✅ **Conclusion**
-Chaque composant est optimisé pour répondre aux exigences actuelles et futures d’Ekoloclast.
